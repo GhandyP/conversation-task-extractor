@@ -302,8 +302,8 @@ func CandidateID(conv Conversation, c TaskCandidate) string {
 
 // Duplicate reports candidates that describe the same task.
 type Duplicate struct {
-	CandidateID string
-	Count       int
+	CandidateID string `json:"candidateId"`
+	Count       int    `json:"count"`
 }
 
 // Deduplicate keeps the first candidate of every id and reports how many extra
@@ -332,10 +332,10 @@ func Deduplicate(candidates []TaskCandidate) (unique []TaskCandidate, duplicates
 
 // DateConflict reports one task that carries two different due dates.
 type DateConflict struct {
-	Title        string
-	Owner        string
-	DueDates     []string
-	CandidateIDs []string
+	Title        string   `json:"title"`
+	Owner        string   `json:"owner"`
+	DueDates     []string `json:"dueDates"`
+	CandidateIDs []string `json:"candidateIds"`
 }
 
 // FindDateConflicts groups candidates by task identity (title and owner) and
