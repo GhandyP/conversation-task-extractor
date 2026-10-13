@@ -54,7 +54,7 @@ Out of scope (not requested): real email/chat API readers, tracker integrations 
 
 | ID | Task | Specs | Route | Status | Evidence |
 |----|------|-------|-------|--------|----------|
-| T1 | Scaffold standalone module: `go.mod`, `.gitignore`, `LICENSE`, CI workflow, remove the old `main.go` prototype | S1 | inline | pending | |
+| T1 | Scaffold standalone module: `go.mod`, `.gitignore`, `LICENSE`, CI workflow, remove the old `main.go` prototype | S1 | inline | done | commit `da86052`; `go env GOMOD` = this module; no `adkhelper` import left; `go build ./...` exit 0 |
 | T2 | Domain types and validation (`Conversation`, `Message`, `TaskCandidate`, `Status`) | S4, S5, S6 | inline | pending | |
 | T3 | Extraction port, prompt, structured-output schema, decoder and quote guard | S10, S5 | inline | pending | |
 | T4 | Deterministic fixture provider plus the conversation fixture matrix | S9, S6, S7 | inline | pending | |
