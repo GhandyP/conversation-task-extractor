@@ -1,0 +1,25 @@
+{
+  "conversationId": "quiet-thread-2026-03-03",
+  "source": "email",
+  "timeZone": "UTC",
+  "messages": [
+    {
+      "messageId": "e1",
+      "sender": "dora",
+      "sentAt": "2026-03-03T13:05:00Z",
+      "text": "Hola, ¿cómo va todo?"
+    },
+    {
+      "messageId": "e2",
+      "sender": "emiliano",
+      "sentAt": "2026-03-03T13:20:00Z",
+      "text": "Todo bien, gracias. ¿Viste el mail de ayer?"
+    },
+    {
+      "messageId": "e3",
+      "sender": "dora",
+      "sentAt": "2026-03-03T13:24:00Z",
+      "text": "Sí, después lo miro con calma."
+    }
+  ]
+}

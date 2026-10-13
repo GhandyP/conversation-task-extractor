@@ -1,0 +1,31 @@
+{
+  "conversationId": "standup-2026-03-02",
+  "source": "chat",
+  "timeZone": "America/Argentina/Buenos_Aires",
+  "messages": [
+    {
+      "messageId": "m1",
+      "sender": "ana",
+      "sentAt": "2026-03-02T09:15:00Z",
+      "text": "Buen día. Dale, mandame el informe de marzo el viernes 6."
+    },
+    {
+      "messageId": "m2",
+      "sender": "beto",
+      "sentAt": "2026-03-02T09:17:00Z",
+      "text": "Perdón, el informe lo entrego el lunes 9."
+    },
+    {
+      "messageId": "m3",
+      "sender": "ana",
+      "sentAt": "2026-03-02T09:20:00Z",
+      "text": "¿Podrías revisar el deck si llegás?"
+    },
+    {
+      "messageId": "m4",
+      "sender": "carla",
+      "sentAt": "2026-03-02T09:31:00Z",
+      "text": "Estaría bueno tener un tablero de métricas algún día."
+    }
+  ]
+}

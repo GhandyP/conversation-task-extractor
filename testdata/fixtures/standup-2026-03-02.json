@@ -1,0 +1,38 @@
+{
+  "candidates": [
+    {
+      "title": "Send the March report",
+      "owner": "beto",
+      "dueDate": "2026-03-06",
+      "status": "explicit",
+      "sourceQuote": "mandame el informe de marzo el viernes 6",
+      "sourceMessageId": "m1",
+      "confidence": 0.86
+    },
+    {
+      "title": "Send the March report",
+      "owner": "beto",
+      "dueDate": "2026-03-06",
+      "status": "explicit",
+      "sourceQuote": "mandame el informe de marzo el viernes 6",
+      "sourceMessageId": "m1",
+      "confidence": 0.8
+    },
+    {
+      "title": "Send the March report",
+      "owner": "beto",
+      "dueDate": "2026-03-09",
+      "status": "explicit",
+      "sourceQuote": "el informe lo entrego el lunes 9",
+      "sourceMessageId": "m2",
+      "confidence": 0.74
+    },
+    {
+      "title": "Review the deck",
+      "status": "tentative",
+      "sourceQuote": "¿Podrías revisar el deck si llegás?",
+      "sourceMessageId": "m3",
+      "confidence": 0.42
+    }
+  ]
+}

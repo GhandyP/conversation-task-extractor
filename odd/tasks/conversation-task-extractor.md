@@ -56,7 +56,7 @@ Out of scope (not requested): real email/chat API readers, tracker integrations 
 |----|------|-------|-------|--------|----------|
 | T1 | Scaffold standalone module: `go.mod`, `.gitignore`, `LICENSE`, CI workflow, remove the old `main.go` prototype | S1 | inline | done | commit `da86052`; `go env GOMOD` = this module; no `adkhelper` import left; `go build ./...` exit 0 |
 | T2 | Domain types and validation (`Conversation`, `Message`, `TaskCandidate`, `Status`) | S4, S5, S6 | inline | done | commit `24e17e3`; RED first (`no non-test Go files`), then GREEN with 14 tests in `internal/domain`; `go vet` and `gofmt` clean |
-| T3 | Extraction port, prompt, structured-output schema, decoder and quote guard | S10, S5 | inline | pending | |
+| T3 | Extraction port, prompt, structured-output schema, decoder and quote guard | S10, S5 | inline | done | commit `08a9c2b`; RED (`no non-test Go files`), then GREEN: `go test -count=1 ./...` ok for `domain` and `extract`; `go vet` + `gofmt` clean |
 | T4 | Deterministic fixture provider plus the conversation fixture matrix | S9, S6, S7 | inline | pending | |
 | T5 | Gemini provider on the official Go SDK behind the port | S10 | inline | pending | |
 | T6 | Approval gate: decisions, duplicate/conflict detection, idempotency keys, JSONL ledger | S7, S8 | inline | pending | |
@@ -84,3 +84,7 @@ D2 (2026-10-01, decision): the extraction backend is the official Gemini Go SDK 
 D3 (2026-10-01, decision): persistence is a local append-only JSONL ledger with idempotency keys, never a tracker integration. Reason: `README.md`'s "done when" criterion "Persistence is dry-run by default and requires human confirmation." would otherwise be vacuous, and `README.md`'s "does not ... persist tasks in a tracker" constraint stays intact.
 
 E1 (2026-10-01, T2 evidence): RED observed as a build failure (`internal/domain: no non-test Go files`), then GREEN with 14 passing tests, `go vet ./...` exit 0, and `gofmt -l .` empty. The domain tests found a real defect before GREEN: `Deduplicate` indexed an empty `duplicates` slice, and its first fix still reported zero-count groups; the final version keeps first-occurrence order and reports only ids with extra copies.
+
+E2 (2026-10-01, T3 evidence): RED observed as a build failure for `internal/extract`, then GREEN with the `domain` and `extract` packages passing, `go vet` exit 0, `gofmt` clean. The decoder is all-or-nothing: an invalid conversation returns the validation error (not `ErrInvalidPayload`), while every provider-side problem returns a `*PayloadError` matching `ErrInvalidPayload` and no partial candidates.
+
+R1 (2026-10-01, RDD assess over `da860522..24e17e3`): native tier `medium`, `reviewDue: false` (`under_budget`), plan `writerSelfVerification: true`, `independentVerifier: false`, writer profile `large` (`runtime`). Recorded as evidence, not as an override of the tier table.

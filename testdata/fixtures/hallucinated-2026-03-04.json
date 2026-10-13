@@ -1,0 +1,22 @@
+{
+  "candidates": [
+    {
+      "title": "Migrate the database",
+      "owner": "fabi",
+      "dueDate": "2026-04-01",
+      "status": "explicit",
+      "sourceQuote": "migrá la base el 1 de abril",
+      "sourceMessageId": "h1",
+      "confidence": 0.91
+    },
+    {
+      "title": "Talk about the migration",
+      "owner": "gina",
+      "dueDate": "2026-03-05",
+      "status": "explicit",
+      "sourceQuote": "lo hablamos el jueves en la reunión",
+      "sourceMessageId": "h2",
+      "confidence": 0.66
+    }
+  ]
+}

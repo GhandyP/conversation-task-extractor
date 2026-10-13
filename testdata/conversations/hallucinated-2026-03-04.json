@@ -1,0 +1,19 @@
+{
+  "conversationId": "hallucinated-2026-03-04",
+  "source": "chat",
+  "timeZone": "UTC",
+  "messages": [
+    {
+      "messageId": "h1",
+      "sender": "fabi",
+      "sentAt": "2026-03-04T10:00:00Z",
+      "text": "Quizás podríamos migrar la base el mes que viene, vemos."
+    },
+    {
+      "messageId": "h2",
+      "sender": "gina",
+      "sentAt": "2026-03-04T10:04:00Z",
+      "text": "Dale, lo hablamos el jueves en la reunión."
+    }
+  ]
+}
