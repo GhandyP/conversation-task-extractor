@@ -108,6 +108,34 @@ func TestTaskCandidateJSONFieldNames(t *testing.T) {
 	}
 }
 
+func TestConversationAndCandidateTypedJSONRoundTrip(t *testing.T) {
+	conversation := testConversation()
+	raw, err := json.Marshal(conversation)
+	if err != nil {
+		t.Fatalf("marshal conversation: %v", err)
+	}
+	var decodedConversation domain.Conversation
+	if err := json.Unmarshal(raw, &decodedConversation); err != nil {
+		t.Fatalf("unmarshal conversation: %v", err)
+	}
+	if !reflect.DeepEqual(conversation, decodedConversation) {
+		t.Errorf("conversation round trip:\n got %+v\nwant %+v", decodedConversation, conversation)
+	}
+
+	candidate := explicitCandidate()
+	raw, err = json.Marshal(candidate)
+	if err != nil {
+		t.Fatalf("marshal candidate: %v", err)
+	}
+	var decodedCandidate domain.TaskCandidate
+	if err := json.Unmarshal(raw, &decodedCandidate); err != nil {
+		t.Fatalf("unmarshal candidate: %v", err)
+	}
+	if !reflect.DeepEqual(candidate, decodedCandidate) {
+		t.Errorf("candidate round trip:\n got %+v\nwant %+v", decodedCandidate, candidate)
+	}
+}
+
 func TestStatusValid(t *testing.T) {
 	valid := []domain.Status{domain.StatusExplicit, domain.StatusTentative, domain.StatusAmbiguous}
 	for _, status := range valid {

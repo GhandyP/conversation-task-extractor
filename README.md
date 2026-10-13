@@ -132,7 +132,8 @@ task-5b5826137f908151 | Send the March report | 2026-03-06 | explicit
 Asking to record tasks without decisions is refused, not guessed:
 
 ```console
-$ task-extract -input testdata/conversations/standup-2026-03-02.json -provider fixture -apply
+$ go run ./cmd/task-extract -input testdata/conversations/standup-2026-03-02.json \
+    -provider fixture -fixture-dir testdata/fixtures -ledger /tmp/tasks.jsonl -apply
 task-extract: approval blocked: refusing to record tasks without explicit human decisions: pass -decisions <file>
 $ echo $?
 3
@@ -249,6 +250,9 @@ go run ./cmd/task-extract -input testdata/conversations/standup-2026-03-02.json 
 not been exercised against the live API in this repository, and CI does not call it.
 
 ## CLI reference
+
+`go build -o task-extract ./cmd/task-extract` produces the binary; every example in this
+README uses `go run ./cmd/task-extract` instead, so nothing has to be installed.
 
 ```text
 Usage:

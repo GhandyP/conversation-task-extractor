@@ -201,6 +201,75 @@ func TestRunRejectsAFabricatedQuote(t *testing.T) {
 	}
 }
 
+// The guard has to hold through the command line, not only in unit tests: a
+// payload the domain would refuse must exit 2 and leave the ledger untouched.
+func TestRunRejectsUnsafeProviderPayloads(t *testing.T) {
+	quote := "mandame el informe de marzo el viernes 6"
+	candidate := func(field, value string) string {
+		base := map[string]string{
+			"title":           "Send the report",
+			"owner":           "beto",
+			"dueDate":         "2026-03-06",
+			"status":          "explicit",
+			"sourceQuote":     quote,
+			"sourceMessageId": "m1",
+			"confidence":      "0.8",
+		}
+		base[field] = value
+		body, err := json.Marshal(map[string]any{"candidates": []any{map[string]any{
+			"title":           base["title"],
+			"owner":           base["owner"],
+			"dueDate":         base["dueDate"],
+			"status":          base["status"],
+			"sourceQuote":     base["sourceQuote"],
+			"sourceMessageId": base["sourceMessageId"],
+			"confidence":      json.Number(base["confidence"]),
+		}}})
+		if err != nil {
+			t.Fatalf("build payload: %v", err)
+		}
+		return string(body)
+	}
+
+	tests := []struct {
+		name    string
+		payload string
+		field   string
+	}{
+		{"unknown status", candidate("status", "probably"), "status"},
+		{"empty status", candidate("status", ""), "status"},
+		{"unknown source message", candidate("sourceMessageId", "m9"), "sourceMessageId"},
+		{"fabricated quote", candidate("sourceQuote", "migrá la base el 1 de abril"), "sourceQuote"},
+		{"confidence above one", candidate("confidence", "1.4"), "confidence"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			fixtureDirectory := t.TempDir()
+			if err := os.WriteFile(
+				filepath.Join(fixtureDirectory, "standup-2026-03-02.json"),
+				[]byte(tc.payload), 0o600); err != nil {
+				t.Fatalf("seed fixture: %v", err)
+			}
+			ledger := filepath.Join(t.TempDir(), "tasks.jsonl")
+
+			code, _, stderr := runCLI(t,
+				"-input", standupConversation,
+				"-provider", "fixture",
+				"-fixture-dir", fixtureDirectory,
+				"-ledger", ledger)
+			if code != 2 {
+				t.Fatalf("exit: got %d, want 2 (extraction failed)\nstderr: %s", code, stderr)
+			}
+			if !strings.Contains(stderr, tc.field) {
+				t.Errorf("stderr %q must name the rejected field %q", stderr, tc.field)
+			}
+			if _, err := os.Stat(ledger); !os.IsNotExist(err) {
+				t.Errorf("a rejected payload must not create a ledger: %v", err)
+			}
+		})
+	}
+}
+
 func TestRunHandlesAConversationWithoutTasks(t *testing.T) {
 	code, stdout, stderr := runCLI(t,
 		"-input", quietConversation, "-provider", "fixture", "-fixture-dir", fixtures,
