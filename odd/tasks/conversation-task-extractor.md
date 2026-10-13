@@ -55,7 +55,7 @@ Out of scope (not requested): real email/chat API readers, tracker integrations 
 | ID | Task | Specs | Route | Status | Evidence |
 |----|------|-------|-------|--------|----------|
 | T1 | Scaffold standalone module: `go.mod`, `.gitignore`, `LICENSE`, CI workflow, remove the old `main.go` prototype | S1 | inline | done | commit `da86052`; `go env GOMOD` = this module; no `adkhelper` import left; `go build ./...` exit 0 |
-| T2 | Domain types and validation (`Conversation`, `Message`, `TaskCandidate`, `Status`) | S4, S5, S6 | inline | pending | |
+| T2 | Domain types and validation (`Conversation`, `Message`, `TaskCandidate`, `Status`) | S4, S5, S6 | inline | done | commit `24e17e3`; RED first (`no non-test Go files`), then GREEN with 14 tests in `internal/domain`; `go vet` and `gofmt` clean |
 | T3 | Extraction port, prompt, structured-output schema, decoder and quote guard | S10, S5 | inline | pending | |
 | T4 | Deterministic fixture provider plus the conversation fixture matrix | S9, S6, S7 | inline | pending | |
 | T5 | Gemini provider on the official Go SDK behind the port | S10 | inline | pending | |
@@ -82,3 +82,5 @@ D1 (2026-10-01, orchestrator, exploration evidence): the folder held only `READM
 D2 (2026-10-01, decision): the extraction backend is the official Gemini Go SDK behind an `Extractor` port instead of ADK. Reason: the prototype's ADK helper lives in a private personal module, which would break the standalone requirement (S1); a port keeps the example testable offline and allows an ADK adapter later. `README.md`'s "ADK layer" roadmap line is superseded here and rewritten in T8.
 
 D3 (2026-10-01, decision): persistence is a local append-only JSONL ledger with idempotency keys, never a tracker integration. Reason: `README.md`'s "done when" criterion "Persistence is dry-run by default and requires human confirmation." would otherwise be vacuous, and `README.md`'s "does not ... persist tasks in a tracker" constraint stays intact.
+
+E1 (2026-10-01, T2 evidence): RED observed as a build failure (`internal/domain: no non-test Go files`), then GREEN with 14 passing tests, `go vet ./...` exit 0, and `gofmt -l .` empty. The domain tests found a real defect before GREEN: `Deduplicate` indexed an empty `duplicates` slice, and its first fix still reported zero-count groups; the final version keeps first-occurrence order and reports only ids with extra copies.
