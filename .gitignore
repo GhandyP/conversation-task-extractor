@@ -1,0 +1,21 @@
+# Build output
+/task-extract
+/dist/
+*.exe
+
+# Local runtime artifacts (never commit conversation data or ledgers)
+/.local/
+*.jsonl
+*.ledger
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+
+# Editor and OS noise
+.DS_Store
+.idea/
+.vscode/
